@@ -21,7 +21,7 @@ What it does:
 
 Notes:
   - This script does not try to run Verilator or other tools; it's purely generation + sanitization.
-  - Ensure GOOGLE_API_KEY is set or genai.configure(...) has been run in your environment.
+  - Ensure LLM_API_KEY is set or genai.configure(...) has been run in your environment.
   - Default model can be overridden by environment variable MODEL_NAME.
 """
 
@@ -153,22 +153,22 @@ def build_prompt(spec: dict) -> str:
 def call_llm(prompt: str, model_name: str = None, max_output_tokens: int = 1500, temperature: float = 0.0) -> str:
     """
     Try a few common call patterns for Google generative API.
-    Requires the environment to have GOOGLE_API_KEY or appropriate ADC set up.
+    Requires the environment to have LLM_API_KEY or appropriate ADC set up.
     """
-    model_name = model_name or os.getenv("MODEL_NAME") or "models/gemini-2.5-pro"
+    model_name = model_name or os.getenv("MODEL_NAME") or "models/gemini-2.5-flash"
 
     if GENAI is None:
         raise RuntimeError(
-            "No Google generative client installed. Install google.generativeai or google.generativelanguage and set GOOGLE_API_KEY.\n"
+            "No Google generative client installed. Install google.generativeai or google.generativelanguage and set LLM_API_KEY.\n"
             "Example: pip install google-generativeai\n"
-            "Then set: export GOOGLE_API_KEY='YOUR_KEY'"
+            "Then set: export LLM_API_KEY='YOUR_KEY'"
         )
 
     # configure if possible
     try:
         if GENAI == "generativeai":
             # if user hasn't configured, attempt to auto configure from env var
-            apikey = os.getenv("GOOGLE_API_KEY")
+            apikey = os.getenv("LLM_API_KEY")
             if apikey:
                 try:
                     genai.configure(api_key=apikey)
@@ -210,7 +210,7 @@ def call_llm(prompt: str, model_name: str = None, max_output_tokens: int = 1500,
                     raise RuntimeError(f"LLM call failed (generativeai). Last error: {e}")
         elif GENAI == "generativelanguage":
             # different library; try typical pattern
-            apikey = os.getenv("GOOGLE_API_KEY")
+            apikey = os.getenv("LLM_API_KEY")
             if apikey:
                 try:
                     gl.configure(api_key=apikey)
@@ -341,7 +341,7 @@ def main():
         llm_raw = call_llm(prompt, model_name=model_name, max_output_tokens=args.max_tokens, temperature=0.0)
     except Exception as e:
         print(f"[ERROR] LLM call failed: {e}", file=sys.stderr)
-        print("Tip: ensure GOOGLE_API_KEY is set and the google.generativeai / generativelanguage package is installed.")
+        print("Tip: ensure LLM_API_KEY is set and the google.generativeai / generativelanguage package is installed.")
         # Save prompt for manual use
         sys.exit(1)
 
