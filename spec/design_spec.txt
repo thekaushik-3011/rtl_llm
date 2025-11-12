@@ -1,0 +1,17 @@
+# Processor Design Specification (Step 0)
+Goal: Generate a simplified 32-bit RISC-V compatible processor using LLM-based RTL generation.
+
+Functional Overview:
+1. Supports arithmetic, logic, branch, and load/store instructions (RV32I subset).
+2. Includes ALU, Register File, Control Unit, Program Counter, and Memory Interface.
+3. Handles interrupts through an Interrupt Controller.
+4. Uses single-cycle behavioral RTL for simplicity.
+5. Verification via LLM-generated testbenches and assertions.
+
+Interfaces:
+- clk: System clock.
+- rst_n: Active-low reset.
+- instruction[31:0]: Instruction input.
+- mem_rd_data[31:0]: Data memory read input.
+- mem_addr[31:0], mem_wr_data[31:0], mem_rd_en, mem_wr_en, byte_en[3:0]: Memory interface.
+- irq[7:0]: External interrupts.
