@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+venv/
+env/
+
+# Verilator build artifacts
+obj_dir/
+*.o
+*.a
+*.d
+*.mk
+V*.cpp
+V*.h
+
+# Simulation outputs
+*.vcd
+*.fst
+*.vvp
+*.log
+
+# Large binaries (if not needed in version control)
+genai
+os
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+test.py
+waveform.*
+
+# Old timestamped files (keep only latest)
+*_2025-*-*_*-*-*.txt
+*_2025-*-*_*-*-*.json
+*_2025-*-*_*-*-*.sv

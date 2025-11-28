@@ -1,0 +1,56 @@
+# RTL Generation Pipeline Configuration
+
+# Project directories
+output_dir: ./output
+data_dir: ./data
+log_level: INFO
+
+# Pipeline settings
+max_iterations: 3  # Maximum refinement attempts
+
+# LLM Configuration
+llm:
+  model: gpt-4  # Options: gpt-4, gpt-3.5-turbo
+  temperature: 0.2  # Lower = more deterministic
+  max_tokens: 2000
+  
+# Tool paths (auto-detected if in PATH)
+tools:
+  verilator: /usr/bin/verilator
+  yosys: /usr/bin/yosys
+  iverilog: /usr/bin/iverilog
+  vvp: /usr/bin/vvp
+
+# Verification settings
+verification:
+  enable_linting: true
+  enable_simulation: true
+  simulation_timeout: 60  # seconds
+  
+# Synthesis settings
+synthesis:
+  enable_synthesis: true
+  synthesis_timeout: 60  # seconds
+  target_library: generic  # Options: generic, sky130, etc.
+  
+# Code generation preferences
+code_generation:
+  style: verilog_2001  # Options: verilog_2001, systemverilog
+  include_comments: true
+  indent_size: 2
+  max_line_length: 100
+  
+# Testbench preferences
+testbench:
+  clock_period: 10  # ns
+  num_random_tests: 20
+  dump_waveforms: true
+  verbose_output: true
+  
+# Example designs to include
+examples:
+  - counter
+  - alu
+  - register_file
+  - mux
+  - decoder
